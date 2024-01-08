@@ -21,6 +21,7 @@ echo "generated root certificate: ${CRTNAME}\n\n"
 # print out the root certificate details
 openssl x509 -noout -purpose -text -in "${CRTNAME}"
 
+# copy and install the root certificate
 if ! sudo cp "${CRTNAME}" /usr/local/share/ca-certificates/; then
   echo "Failed to install root certificate"
   exit 1
