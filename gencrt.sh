@@ -23,7 +23,7 @@ openssl req -noout -text -in "${REQNAME}"
 
 # generate the server certificate from the server certificate request
 CRTNAME=${PREFIX}.crt
-openssl x509 -req -inform PEM -in "${REQNAME}" -outform PEM -out "${CRTNAME}" -preserve_dates -CA local-root.crt -CAkey local-root.key -CAcreateserial -extfile openssl.cnf -extensions usr_cert
+openssl x509 -req -inform PEM -in "${REQNAME}" -outform PEM -out "${CRTNAME}" -days 1000000 -CA local-root.crt -CAkey local-root.key -CAcreateserial -extfile openssl.cnf -extensions usr_cert
 if [ $? -ne 0 ]; then
   echo "FAiled server certificate generation"
   exit 1
