@@ -172,7 +172,7 @@ subjectAltName=@alt_names
 # This goes against PKIX guidelines but some CAs do it and some software
 # requires this to avoid interpreting an end user certificate as a CA.
 
-basicConstraints=CA:FALSE
+basicConstraints=critical,CA:FALSE
 
 # This is typical in keyUsage for a client certificate.
 keyUsage = critical, digitalSignature, keyEncipherment
