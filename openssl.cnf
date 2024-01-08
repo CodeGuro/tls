@@ -175,7 +175,7 @@ subjectAltName=@alt_names
 basicConstraints=CA:FALSE
 
 # This is typical in keyUsage for a client certificate.
-keyUsage = digitalSignature, keyEncipherment
+keyUsage = critical, digitalSignature, keyEncipherment
 extendedKeyUsage=serverAuth,clientAuth
 
 # PKIX recommendations harmless if included in all certificates.
@@ -197,7 +197,7 @@ issuerAltName=issuer:copy
 # Extensions to add to a certificate request
 subjectAltName=@alt_names
 basicConstraints = critical, CA:FALSE
-keyUsage = digitalSignature, keyEncipherment
+keyUsage = critical, digitalSignature, keyEncipherment
 extendedKeyUsage=serverAuth,clientAuth
 
 [ v3_ca ]
