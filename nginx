@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec docker run --rm -p 443:443 -v /home/tony/Desktop/tls/server.conf:/etc/nginx/conf.d/server.conf:ro -v /home/tony/Desktop/tls/development.crt:/etc/nginx/development.crt:ro -v /home/tony/Desktop/tls/development.key:/etc/nginx/development.key:ro -ti nginx:stable-alpine3.17 nginx -g 'daemon off;'
