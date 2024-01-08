@@ -168,14 +168,15 @@ unstructuredName		= An optional company name
 [ usr_cert ]
 
 # These extensions are added when 'ca' signs a request.
-
+subjectAltName=@alt_names
 # This goes against PKIX guidelines but some CAs do it and some software
 # requires this to avoid interpreting an end user certificate as a CA.
 
 basicConstraints=CA:FALSE
 
 # This is typical in keyUsage for a client certificate.
-keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+keyUsage = digitalSignature, keyEncipherment
+extendedKeyUsage=serverAuth,clientAuth
 
 # PKIX recommendations harmless if included in all certificates.
 subjectKeyIdentifier=hash
@@ -183,13 +184,10 @@ authorityKeyIdentifier=keyid,issuer
 
 # This stuff is for subjectAltName and issuerAltname.
 # Import the email address.
-# subjectAltName=email:copy
-# An alternative to produce certificates that aren't
-# deprecated according to PKIX.
-# subjectAltName=email:move
+subjectAltName=email:copy
 
 # Copy subject details
-# issuerAltName=issuer:copy
+issuerAltName=issuer:copy
 
 # This is required for TSA certificates.
 # extendedKeyUsage = critical,timeStamping
@@ -197,9 +195,10 @@ authorityKeyIdentifier=keyid,issuer
 [ v3_req ]
 
 # Extensions to add to a certificate request
-
-basicConstraints = CA:FALSE
-keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName=@alt_names
+basicConstraints = critical, CA:FALSE
+keyUsage = digitalSignature, keyEncipherment
+extendedKeyUsage=serverAuth,clientAuth
 
 [ v3_ca ]
 # Extensions for a typical CA
@@ -273,3 +272,10 @@ system_default = system_default_sect
 [system_default_sect]
 MinProtocol = TLSv1.2
 CipherString = DEFAULT@SECLEVEL=2
+
+[alt_names]
+DNS.1=localhost
+DNS.2=maximus
+DNS.3=*.attlocal.net
+IP.1=127.0.0.1
+IP.2=::1
