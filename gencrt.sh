@@ -17,8 +17,28 @@ if [ $? -ne 0 ]; then
   echo "Failed certificate key generation"
   exit 1
 fi
+# print the certificate request details
 echo -e "generated server certificate request: ${REQNAME}\n"
 openssl req -noout -text -in "${REQNAME}"
 
 # generate the server certificate from the server certificate request
 CRTNAME=${PREFIX}.crt
+openssl x509 -req -inform PEM -in "${REQNAME}" -outform PEM -out "${CRTNAME}" -preserve_dates -CA local-root.crt -CAkey local-root.key -CAcreateserial -extfile openssl.cnf -extensions usr_cert
+if [ $? -ne 0 ]; then
+  echo "FAiled server certificate generation"
+  exit 1
+fi
+# print the certificate details
+echo -e "generated server certificate: ${CRTNAME}\n"
+openssl x509 -in "${CRTNAME}" -noout -purpose -text
+
+# copy and install the server certificate
+if ! sudo cp "${CRTNAME}" /usr/local/share/ca-certificates/; then
+  echo "Failed to install server certificate"
+  exit 1
+fi
+
+if ! sudo update-ca-certificates --fresh >/dev/null; then
+  echo "Failed to update server certificates"
+  exit 1
+fi
